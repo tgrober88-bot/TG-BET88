@@ -3743,7 +3743,7 @@
         grid-auto-flow: column;
         grid-template-columns: none;
         grid-template-rows: repeat(2, minmax(0, 1fr));
-        grid-auto-columns: minmax(154px, 44vw);
+        grid-auto-columns: calc((100% - 14px) / 2);
         gap: 14px;
         width: 100%;
         max-width: 100%;
@@ -3811,18 +3811,55 @@
 
       .promo-grid,
       .proof-grid {
-        display: grid;
-        width: 100%;
-        animation: none;
+        display: grid !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        transform: none !important;
+        animation: none !important;
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .promo-card,
       .promo-card-featured,
       .proof-card,
       .proof-card:nth-child(1) {
-        width: 100%;
-        flex-basis: auto;
+        width: 100% !important;
+        min-width: 0;
+        flex: none !important;
+        flex-basis: auto !important;
+        grid-column: auto;
+      }
+
+      .promo-featured-spot .promo-card-featured {
+        width: 100% !important;
+      }
+
+      #promotions,
+      .section:has(#proofGrid) {
+        overflow: visible;
+      }
+
+      .promo-card img,
+      .promo-card-featured img,
+      .proof-card img {
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+      }
+
+      .promo-content,
+      .proof-content {
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .promo-title,
+      .promo-desc,
+      .promo-meta,
+      .proof-title,
+      .proof-desc {
+        overflow-wrap: anywhere;
       }
     }
 
@@ -4846,11 +4883,6 @@
         }
       });
 
-      Array.from(promoGrid.children).forEach(function(card) {
-        const clone = card.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        promoGrid.appendChild(clone);
-      });
     }
 
     function getPromoWhatsappLink(promo) {
@@ -4913,11 +4945,6 @@
         proofGrid.appendChild(card);
       });
 
-      Array.from(proofGrid.children).forEach(function(card) {
-        const clone = card.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        proofGrid.appendChild(clone);
-      });
     }
 
     function bindButtons() {
